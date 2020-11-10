@@ -29,9 +29,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.aspects.IAspectContainer;
 
 import java.util.Map.Entry;
 
@@ -39,7 +36,7 @@ import java.util.Map.Entry;
  *
  * @author CovertJaguar <http://www.railcraft.info>
  */
-public class EntityLocomotiveSteamMagic extends EntityLocomotiveSteam implements ISidedInventory, IAspectContainer {
+public class EntityLocomotiveSteamMagic extends EntityLocomotiveSteam implements ISidedInventory {
 
     private static final int SLOT_BURN = 2;
     private static final int SLOT_FUEL_A = 3;
@@ -75,27 +72,10 @@ public class EntityLocomotiveSteamMagic extends EntityLocomotiveSteam implements
         return LocomotiveRenderType.STEAM_MAGIC;
     }
 
-    @Override
-    public boolean doesContainerAccept(Aspect tag) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     protected void entityInit() {
         super.entityInit();
-
-        fireAspect = new EssentiaTank(Aspect.FIRE, 256, dataWatcher, FIRE_ASPECT_DATA_ID);
-        waterAspect = new EssentiaTank(Aspect.WATER, 256, dataWatcher, WATER_ASPECT_DATA_ID);
-
-        boiler.setFuelProvider(new EssentiaFuelProvider(fireAspect) {
-            @Override
-            public double getMoreFuel() {
-                if (isShutdown())
-                    return 0;
-                return super.getMoreFuel();
-            }
-
-        });
     }
 
     @Override
@@ -177,64 +157,4 @@ public class EntityLocomotiveSteamMagic extends EntityLocomotiveSteam implements
                 return false;
         }
     }
-
-    @Override
-    public AspectList getAspects() {
-        return new AspectList().add(Aspect.FIRE, fireAspect.getAmount()).add(Aspect.WATER, waterAspect.getAmount());
-    }
-
-    @Override
-    public void setAspects(AspectList aspects) {
-    }
-
-    @Override
-    public int addToContainer(Aspect tag, int amount) {
-        if (tag == Aspect.FIRE)
-            return fireAspect.fill(amount, true);
-        if (tag == Aspect.WATER)
-            return waterAspect.fill(amount, true);
-        return amount;
-    }
-
-    @Override
-    public boolean takeFromContainer(Aspect tag, int amount) {
-        if (tag == Aspect.FIRE)
-            return fireAspect.remove(amount, true);
-        if (tag == Aspect.WATER)
-            return waterAspect.remove(amount, true);
-        return false;
-    }
-
-    @Override
-    public boolean takeFromContainer(AspectList ot) {
-        return false;
-    }
-
-    @Override
-    public boolean doesContainerContainAmount(Aspect tag, int amount) {
-        if (tag == Aspect.FIRE)
-            return fireAspect.contains(amount);
-        if (tag == Aspect.WATER)
-            return waterAspect.contains(amount);
-        return false;
-    }
-
-    @Override
-    public boolean doesContainerContain(AspectList ot) {
-        for (Entry<Aspect, Integer> entry : ot.aspects.entrySet()) {
-            if (!doesContainerContainAmount(entry.getKey(), entry.getValue()))
-                return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int containerContains(Aspect tag) {
-        if (tag == Aspect.FIRE)
-            return fireAspect.getAmount();
-        if (tag == Aspect.WATER)
-            return waterAspect.getAmount();
-        return 0;
-    }
-
 }

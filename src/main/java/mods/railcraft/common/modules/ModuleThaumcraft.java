@@ -22,7 +22,7 @@ public class ModuleThaumcraft extends RailcraftModule {
 
     @Override
     public boolean canModuleLoad() {
-        return ThaumcraftPlugin.isModInstalled();
+        return false;
     }
 
     @Override
@@ -32,8 +32,7 @@ public class ModuleThaumcraft extends RailcraftModule {
 
     @Override
     public void initFirst() {
-        ItemCrowbarMagic.registerItem();
-        ItemCrowbarVoid.registerItem();
+
     }
 
     @Override
@@ -42,11 +41,6 @@ public class ModuleThaumcraft extends RailcraftModule {
 
     @Override
     public void postInit() {
-        ThaumcraftPlugin.registerAspects();
-        ThaumcraftPlugin.setupResearch();
-
-        ItemCrowbarMagic.registerResearch();
-        ItemCrowbarVoid.registerResearch();
     }
 
 }
