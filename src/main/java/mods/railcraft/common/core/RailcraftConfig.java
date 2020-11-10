@@ -106,8 +106,8 @@ public class RailcraftConfig {
     private static boolean routingOpsOnly;
     private static boolean machinesRequirePower;
     private static boolean trackingAuraEnabled;
-    private static int minecartTankCapacity = 32;
-    private static int minecartTankFillRate = 32;
+    private static int minecartTankCapacity = 512;
+    private static int minecartTankFillRate = 8;
     private static int launchRailMaxForce;
     private static int cartDispenserDelay;
     private static int minecartStackSize;
@@ -294,13 +294,13 @@ public class RailcraftConfig {
 
         boolean minecartTankCustomize = get(CAT_TWEAKS_CARTS + ".tank", "useCustomValues", false, "change to '{t}=true' to adjust the Tank Cart's capacity and fill rate");
 
-        int capacity = get(CAT_TWEAKS_CARTS + ".tank", "capacity", 4, 32, 64, "change the value to your desired Tank Cart capacity in buckets, min=4, default=32, max=64, ignored if 'tweaks.minecarts.tank.useCustomValues=false'");
+        int capacity = get(CAT_TWEAKS_CARTS + ".tank", "capacity", 4, 512, 1024, "change the value to your desired Tank Cart capacity in buckets, min=4, default=512, max=1024, ignored if 'tweaks.minecarts.tank.useCustomValues=false'");
         if (minecartTankCustomize)
             minecartTankCapacity = capacity;
 
-        int fillrate = get(CAT_TWEAKS_CARTS + ".tank", "fillrate", 4, 32, 64,
-                "change the value to your desired Tank Cart fill rate in milli-buckets per tick, min=4, default=32, max=64\n"
-                        + "there are 1000 milli-buckets in a bucket, ignored if 'tweaks.minecarts.tank.useCustomValues=false'");
+        int fillrate = get(CAT_TWEAKS_CARTS + ".tank", "fillrate", 4, 8, 32,
+                "change the value to your desired Tank Cart fill rate in buckets per tick, min=4, default=8, max=32\n"
+                        + "ignored if 'tweaks.minecarts.tank.useCustomValues=false'");
         if (minecartTankCustomize)
             minecartTankFillRate = fillrate;
     }
@@ -850,7 +850,7 @@ public class RailcraftConfig {
     }
 
     public static int getTankCartFillRate() {
-        return minecartTankFillRate;
+        return minecartTankFillRate * FluidHelper.BUCKET_VOLUME;
     }
 
     public static int getTankCartCapacity() {

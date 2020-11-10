@@ -39,7 +39,7 @@ public abstract class TileLoaderFluidBase extends TileLoaderBase implements IInv
     protected static final int SLOT_INPUT = 0;
     protected static final int SLOT_OUTPUT = 1;
     protected static final int[] SLOTS = InvTools.buildSlotArray(0, 2);
-    protected static final int CAPACITY = FluidHelper.BUCKET_VOLUME * 32;
+    protected static final int CAPACITY = FluidHelper.BUCKET_VOLUME * 64;
     protected final PhantomInventory invFilter = new PhantomInventory(1);
     protected final IInventory invInput = new InventoryMapper(this, SLOT_INPUT, 1);
     protected final TankManager tankManager = new TankManager();

@@ -39,7 +39,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileFluidUnloader extends TileLoaderFluidBase implements IGuiReturnHandler {
 
-    private static final int TRANSFER_RATE = 80;
+    private static final int TRANSFER_RATE = 8000;
     private final MultiButtonController<ButtonState> stateController = new MultiButtonController<ButtonState>(ButtonState.EMPTY_COMPLETELY.ordinal(), ButtonState.values());
 
     @Override

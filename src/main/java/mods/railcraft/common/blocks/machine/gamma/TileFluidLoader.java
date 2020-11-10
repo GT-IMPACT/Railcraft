@@ -52,7 +52,7 @@ import java.io.IOException;
 
 public class TileFluidLoader extends TileLoaderFluidBase implements IGuiReturnHandler {
     private static final int RESET_WAIT = 200;
-    private static final int TRANSFER_RATE = 20;
+    private static final int TRANSFER_RATE = 8000;
     private static final float MAX_PIPE_LENGTH = 16 * 0.0625f;
     private static final float PIPE_INCREMENT = 0.01f;
     private final MultiButtonController<ButtonState> stateController = new MultiButtonController<ButtonState>(ButtonState.FORCE_FULL.ordinal(), ButtonState.values());
